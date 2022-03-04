@@ -1,0 +1,20 @@
+class Solution
+{
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int w, Item arr[], int n) 
+    {
+        // Your code here
+        Arrays.sort(arr,(a,b) -> (-(a.value*b.weight)+(a.weight*b.value)));
+        double res=0;
+        for(Item i:arr) {
+            if(i.weight<=w) {
+                res+=i.value;
+                w-=i.weight;
+            } else {
+                res+=(i.value*((double)w/i.weight));
+                break;
+            }
+        }
+        return res;
+    }
+}
