@@ -1,0 +1,48 @@
+class Solution
+{
+    //Function to find the maximum profit and the number of jobs done.
+    class Pair implements Comparable<Pair> {
+        int d;
+        int p;
+        Pair(int a,int b) {
+            d=a;
+            p=b;
+        }
+        public int compareTo(Pair obj) {
+            return (-this.p+obj.p);
+        }
+    } 
+    
+    
+    int[] JobScheduling(Job job[], int n)
+    {
+        // Your code here
+        int max=0;
+        Pair[] arr=new Pair[n];
+        for(int i=0;i<n;i++) {
+            arr[i]=new Pair(job[i].deadline,job[i].profit);
+            max=Math.max(max,job[i].deadline);
+        }
+        Arrays.sort(arr);
+        int[] dead=new int[max+1];
+        for(int i=0;i<n;i++) {
+            int d=arr[i].d;
+            int p=arr[i].p;
+            for(int j=d;j>0;j--) {
+                if(dead[j]==0) {
+                    dead[j]=p;
+                    break;
+                }
+            }
+        }
+        int[] res=new int[2];
+        for(int i=1;i<=max;i++) {
+            if(dead[i]!=0) {
+                res[0]++;
+                res[1]+=dead[i];
+            }
+        }
+        return res;
+    }
+    
+}
